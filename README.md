@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Build envoy proxy
+
+```bash
+docker build -t grpc-web-react .
+docker run -d --name grpc-web-react --add-host=host.docker.internal:host-gateway -p 8080:8080 -p 9901:9901 grpc-web-react
+# docker run -d --name grpc-web-react --net="host" -p 8080:8080 -p 9901:9901 grpc-web-react
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
