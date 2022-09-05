@@ -37,16 +37,19 @@ static_resources:
                         expose_headers: custom-header-1,grpc-status,grpc-message
                 http_filters:
                   - name: envoy.filters.http.grpc_web
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_web.v3.GrpcWeb
                   - name: envoy.filters.http.cors
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.cors.v3.Cors
                   - name: envoy.filters.http.router
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
   clusters:
     - name: chat_service
       connect_timeout: 0.25s
       type: logical_dns
       http2_protocol_options: {}
-      # upstream_connection_options:
-      # tcp_keepalive:
-      # keepalive_time: 300
       lb_policy: round_robin
       # win/mac hosts: Use address: host.docker.internal instead of address: localhost in the line below
       load_assignment:
@@ -57,4 +60,5 @@ static_resources:
                   address:
                     socket_address:
                       address: host.docker.internal
+                      # address: localhost
                       port_value: 9090
